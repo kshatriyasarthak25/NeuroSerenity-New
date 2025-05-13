@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-time EEG Simulation</title>
+    <style>
+        #feedback {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        #amplitude {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>EEG Simulation</h1>
+    <button onclick="startSimulation()">Start Simulation</button>
+    <p id="feedback">Feedback: Waiting...</p>
+    <div id="amplitude">Amplitude: </div>
+    <div id="feedback">Feedback: </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <canvas id="eegChart" width="200" height="100"></canvas>
+    <script src="app.js"></script> <!-- Link to your app.js -->
+
+    <script>
+        // Start the simulation by calling the backend every few seconds
+        let simulationInterval;
+
+        function startSimulation() {
+            // Start fetching EEG data every 4 seconds
+            simulationInterval = setInterval(fetchEEGData, 4000); // 4000ms = 4 seconds
+        }
+
+        function stopSimulation() {
+            clearInterval(simulationInterval);
+        }
+
+        function fetchEEGData() {
+            fetch('http://127.0.0.1:5000/simulate_eeg')
+                .then(response => response.json())
+                .then(data => {
+                    // Display the fetched EEG data
+                    document.getElementById('amplitude').innerText = "Amplitude: " + data.amplitude;
+                    document.getElementById('feedback').innerText = "Feedback: " + data.feedback;
+                })
+                .catch(error => {
+                    console.error('Error fetching data from backend:', error);
+                    stopSimulation(); // Stop fetching if there's an error
+                    alert('Error fetching data from backend.');
+                });
+        }
+
+        // Optionally, automatically start the simulation when the page loads
+        window.onload = function() {
+            startSimulation();
+        }
+    </script>
+</body>
+</html>
