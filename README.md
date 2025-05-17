@@ -1,6 +1,6 @@
-# NeuroSerenity-New
+# NeuroSerenity
 
-**NeuroSerenity-New** is an initial-phase Brain-Computer Interface (BCI) model designed to process and interpret EEG data.  
+**NeuroSerenity** is an initial-phase Brain-Computer Interface (BCI) model designed to process and interpret EEG data.  
 The project aims to bridge the gap between neural signals and actionable insights, leveraging modern web technologies and machine learning.
 
 ## 🧠 Project Overview
